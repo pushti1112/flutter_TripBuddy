@@ -8,10 +8,16 @@ class SplashScreen extends StatelessWidget {
     return Container(
       
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [const Color.fromARGB(255, 167, 205, 237), const Color.fromARGB(255, 238, 229, 240)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+        
+        // gradient: LinearGradient(
+        //   colors: [const Color.fromARGB(255, 167, 205, 237), const Color.fromARGB(255, 238, 229, 240)],
+        //   begin: Alignment.topLeft,
+        //   end: Alignment.bottomRight,
+        // ),
+
+        image: DecorationImage(
+          image: AssetImage('lib/assets/Splash_bg.jpeg'),
+          fit: BoxFit.cover,
         ),
       ),
 
@@ -25,7 +31,7 @@ class SplashScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   'App Version: 1.0.0',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
@@ -45,13 +51,13 @@ class SplashScreen extends StatelessWidget {
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
       
-          SizedBox(height: 250),
+          SizedBox(height: 310),
       
           CircularProgressIndicator(),
       
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text("Loading...", style: TextStyle(fontSize: 16)),
+            child: Text("Loading...", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
           ),
       
           SizedBox(height: 20),
@@ -60,7 +66,7 @@ class SplashScreen extends StatelessWidget {
       
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text("Copyright © 2026 TripBuddy. All rights reserved.",style: TextStyle(fontSize: 16),),
+            child: Text("Copyright © 2026 TripBuddy. All rights reserved.",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
           ),
       
         ],
