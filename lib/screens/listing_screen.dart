@@ -27,7 +27,7 @@ class ListingScreen extends StatelessWidget {
 
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/listing_bg.jpg"),
+                    image: AssetImage("assets/listing_bg.jpeg"),
                     fit: BoxFit.cover,
                   ),
                 ),
