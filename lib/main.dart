@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/add_place_screen.dart';
 import 'package:flutter_application_1/screens/splash_screen.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
-          child: SplashScreen(),
+          child: AddPlaceScreen(),
         ),
       ),
     );
