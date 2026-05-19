@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 class AddPlaceScreen extends StatefulWidget {
 
   final List<Map<String, dynamic>> places;
-  const AddPlaceScreen({super.key, required this.places});
+  final Function(Map<String, dynamic>) addPlace;
+
+  const AddPlaceScreen({super.key, required this.places, required this.addPlace});
 
   @override
   State<AddPlaceScreen> createState() => _AddPlaceScreenState();
 }
 
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
-  final TextEditingController imageController = TextEditingController();
+
+    final TextEditingController imageController = TextEditingController();
     final TextEditingController nameController = TextEditingController(); 
     final TextEditingController cityController = TextEditingController();
     final TextEditingController descriptionController = TextEditingController();
@@ -78,6 +81,14 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
             ElevatedButton(
               onPressed: () {
                 // Handle save action
+                final newPlace = {
+                  "name": nameController.text,
+                  "city": cityController.text,
+                  "image": imageController.text,
+                  "description": descriptionController.text,
+                };
+                widget.addPlace(newPlace);
+                Navigator.pop(context);
               },
               child: Text('Add Place'),
             ),
