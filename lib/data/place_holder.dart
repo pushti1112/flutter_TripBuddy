@@ -32,8 +32,13 @@ class _PlaceHolderState extends State<PlaceHolder> {
     });
   }
 
+  void deletePlace(int index) {
+    setState(() {
+      places.removeAt(index);
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return ListingScreen(places: places,addPlace: addPlace);
+    return ListingScreen(places: places,addPlace: addPlace, deletePlace: deletePlace);
   }
 }
