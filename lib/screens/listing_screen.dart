@@ -5,11 +5,13 @@ import 'package:flutter_application_1/screens/detail_screen.dart';
 class ListingScreen extends StatelessWidget {
   final List<Map<String, dynamic>> places;
   final Function(Map<String, dynamic>) addPlace;
+  final Function(int) deletePlace;
 
   const ListingScreen({
     super.key,
     required this.places,
     required this.addPlace,
+    required this.deletePlace,
   });
 
   @override
@@ -186,10 +188,13 @@ class ListingScreen extends StatelessWidget {
                                   },
                                   child: const Text("Discover", style: TextStyle(fontWeight: FontWeight.w600)),
                                 ),
+
                                 Spacer(),
+                                
                                 IconButton(
                                   onPressed: () {
                                     // delete code here
+                                    deletePlace(index);
                                   },
 
                                   icon: const Icon(
