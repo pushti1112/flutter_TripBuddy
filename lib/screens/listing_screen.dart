@@ -22,14 +22,14 @@ class ListingScreen extends StatelessWidget {
           Stack(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.28,
+                height: MediaQuery.of(context).size.height * 0.30,
                 width: double.infinity,
 
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/listing_bg.jpeg"),
+                    image: AssetImage("lib/assets/listing_bg.jpeg"),
                     fit: BoxFit.cover,
-                  ),
+                  )
                 ),
               ),
 
