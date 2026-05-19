@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
-
-class SplashScreen extends StatelessWidget {
+import 'package:flutter_application_1/data/place_holder.dart';
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 5), () {
+      // Navigate to the next screen after the splash screen duration
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const PlaceHolder()), // Replace with your next screen
+      );
+    });
+  }
+
   Widget build(BuildContext context) {
     return Container(
       
@@ -73,4 +89,4 @@ class SplashScreen extends StatelessWidget {
       ),
     );
   }
-}
+  }

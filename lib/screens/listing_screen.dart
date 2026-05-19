@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/data/dummy_data.dart';
+import 'package:flutter_application_1/screens/add_place_screen.dart';
+import 'package:flutter_application_1/screens/detail_screen.dart';
+
 
 class ListingScreen extends StatelessWidget {
-  const ListingScreen({super.key});
+  final List<Map<String, dynamic>> places;
+
+  const ListingScreen({super.key, required this.places});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +16,12 @@ class ListingScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
 
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => AddPlaceScreen(places: places)),
+          );
+        },
 
         child: const Icon(Icons.add, color: Colors.white),
       ),
@@ -29,7 +38,7 @@ class ListingScreen extends StatelessWidget {
                   image: DecorationImage(
                     image: AssetImage("lib/assets/listing_bg.jpeg"),
                     fit: BoxFit.cover,
-                  )
+                  ),
                 ),
               ),
 
@@ -158,7 +167,15 @@ class ListingScreen extends StatelessWidget {
                             const SizedBox(height: 5),
 
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        DetailScreen(),
+                                  ),
+                                );
+                              },
                               child: const Text("Discover"),
                             ),
                           ],
