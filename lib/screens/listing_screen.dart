@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/add_place_screen.dart';
 import 'package:flutter_application_1/screens/detail_screen.dart';
 
-
-class ListingScreen extends StatelessWidget {
+class ListingScreen extends StatefulWidget {
   final List<Map<String, dynamic>> places;
 
   const ListingScreen({super.key, required this.places});
+
+  @override
+  State<ListingScreen> createState() => _ListingScreenState();
+}
+
+class _ListingScreenState extends State<ListingScreen> {
+  String search = "";
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,9 @@ class ListingScreen extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => AddPlaceScreen(places: places)),
+            MaterialPageRoute(
+              builder: (_) => AddPlaceScreen(places: widget.places),
+            ),
           );
         },
 
@@ -28,6 +36,7 @@ class ListingScreen extends StatelessWidget {
 
       body: Column(
         children: [
+          // TOP SECTION
           Stack(
             children: [
               Container(
@@ -42,11 +51,6 @@ class ListingScreen extends StatelessWidget {
                 ),
               ),
 
-              Container(
-                height: MediaQuery.of(context).size.height * 0.28,
-                width: double.infinity,
-              ),
-
               Positioned(
                 left: 20,
                 top: 90,
@@ -57,6 +61,7 @@ class ListingScreen extends StatelessWidget {
                   children: const [
                     Text(
                       "Trip Buddy",
+
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 50,
@@ -68,6 +73,7 @@ class ListingScreen extends StatelessWidget {
 
                     Text(
                       "Make your trip easier with trip buddy!",
+
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ],
@@ -87,10 +93,17 @@ class ListingScreen extends StatelessWidget {
             ],
           ),
 
+          // SEARCH BAR
           Padding(
             padding: const EdgeInsets.all(16),
 
             child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  search = value;
+                });
+              },
+
               decoration: InputDecoration(
                 hintText: "Search Places",
 
@@ -107,14 +120,22 @@ class ListingScreen extends StatelessWidget {
             ),
           ),
 
+          // LIST
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16),
 
-              itemCount: places.length,
+              itemCount: widget.places.length,
 
               itemBuilder: (context, index) {
-                final place = places[index];
+                final place = widget.places[index];
+
+                // SEARCH FILTER
+                if (!place['name'].toLowerCase().contains(
+                  search.toLowerCase(),
+                )) {
+                  return const SizedBox();
+                }
 
                 return Card(
                   elevation: 4,
@@ -128,10 +149,13 @@ class ListingScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
 
                     children: [
+                      // IMAGE
                       Container(
                         height: 200,
+
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
+
                           image: DecorationImage(
                             image: NetworkImage(place['image']),
                             fit: BoxFit.cover,
@@ -170,12 +194,13 @@ class ListingScreen extends StatelessWidget {
                               onPressed: () {
                                 Navigator.push(
                                   context,
+
                                   MaterialPageRoute(
-                                    builder: (_) =>
-                                        DetailScreen(),
+                                    builder: (_) => DetailScreen(place: place),
                                   ),
                                 );
                               },
+
                               child: const Text("Discover"),
                             ),
                           ],
@@ -187,8 +212,6 @@ class ListingScreen extends StatelessWidget {
               },
             ),
           ),
-
-          const SizedBox(height: 80),
         ],
       ),
     );
