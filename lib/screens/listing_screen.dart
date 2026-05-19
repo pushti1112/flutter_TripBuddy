@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/add_place_screen.dart';
 import 'package:flutter_application_1/screens/detail_screen.dart';
 
-
 class ListingScreen extends StatelessWidget {
   final List<Map<String, dynamic>> places;
+  final Function(Map<String, dynamic>) addPlace;
 
-  const ListingScreen({super.key, required this.places});
+  const ListingScreen({
+    super.key,
+    required this.places,
+    required this.addPlace,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,10 @@ class ListingScreen extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => AddPlaceScreen(places: places)),
+            MaterialPageRoute(
+              builder: (_) =>
+                  AddPlaceScreen(places: places, addPlace: addPlace),
+            ),
           );
         },
 
@@ -166,17 +173,31 @@ class ListingScreen extends StatelessWidget {
 
                             const SizedBox(height: 5),
 
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        DetailScreen(),
+                            Row(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => DetailScreen(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text("Discover", style: TextStyle(fontWeight: FontWeight.w600)),
+                                ),
+                                Spacer(),
+                                IconButton(
+                                  onPressed: () {
+                                    // delete code here
+                                  },
+
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Color.fromARGB(255, 205, 117, 237),
                                   ),
-                                );
-                              },
-                              child: const Text("Discover"),
+                                ),
+                              ],
                             ),
                           ],
                         ),

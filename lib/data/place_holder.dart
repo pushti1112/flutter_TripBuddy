@@ -9,6 +9,7 @@ class PlaceHolder extends StatefulWidget {
 }
 
 class _PlaceHolderState extends State<PlaceHolder> {
+
   List<Map<String, dynamic>> places = [
     {
       "name": "Eiffel Tower",
@@ -33,6 +34,6 @@ class _PlaceHolderState extends State<PlaceHolder> {
 
   @override
   Widget build(BuildContext context) {
-    return ListingScreen(places: places);
+    return ListingScreen(places: places,addPlace: addPlace);
   }
 }
