@@ -51,12 +51,19 @@ class _PlaceHolderState extends State<PlaceHolder> {
     });
   }
 
+  void updatePlace(int index, Map<String, dynamic> updatedPlace) {
+    setState(() {
+      places[index] = updatedPlace;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListingScreen(
       places: places,
       addPlace: addPlace,
       deletePlace: deletePlace,
+      updatePlace: updatePlace,
     );
   }
 }
