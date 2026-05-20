@@ -195,6 +195,9 @@ class ListingScreen extends StatelessWidget {
                                   onPressed: () {
                                     // delete code here
                                     deletePlace(index);
+                                    ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text("Place Deleted")));
                                   },
 
                                   icon: const Icon(
