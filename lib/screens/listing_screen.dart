@@ -6,8 +6,9 @@ class ListingScreen extends StatelessWidget {
   final List<Map<String, dynamic>> places;
   final Function(Map<String, dynamic>) addPlace;
   final Function(int) deletePlace;
+  String search = "";
 
-  const ListingScreen({
+  ListingScreen({
     super.key,
     required this.places,
     required this.addPlace,
@@ -125,6 +126,12 @@ class ListingScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final place = places[index];
 
+                if (!place['name'].toLowerCase().contains(
+                  search.toLowerCase(),
+                )) {
+                  return const SizedBox();
+                }
+
                 return Card(
                   elevation: 4,
                   margin: const EdgeInsets.only(bottom: 15),
@@ -182,7 +189,8 @@ class ListingScreen extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => DetailScreen(),
+                                        builder: (_) =>
+                                            DetailScreen(place: place),
                                       ),
                                     );
                                   },
