@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/add_place_screen.dart';
 import 'package:flutter_application_1/screens/detail_screen.dart';
 
-class ListingScreen extends StatelessWidget {
+class ListingScreen extends StatefulWidget {
   final List<Map<String, dynamic>> places;
   final Function(Map<String, dynamic>) addPlace;
   final Function(int) deletePlace;
-  String search = "";
 
-  ListingScreen({
+  const ListingScreen({
     super.key,
     required this.places,
     required this.addPlace,
     required this.deletePlace,
   });
+
+  @override
+  State<ListingScreen> createState() => _ListingScreenState();
+}
+
+class _ListingScreenState extends State<ListingScreen> {
+  String search = "";
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +33,10 @@ class ListingScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) =>
-                  AddPlaceScreen(places: places, addPlace: addPlace),
+              builder: (_) => AddPlaceScreen(
+                places: widget.places,
+                addPlace: widget.addPlace,
+              ),
             ),
           );
         },
@@ -101,6 +109,12 @@ class ListingScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
 
             child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  search = value;
+                });
+              },
+
               decoration: InputDecoration(
                 hintText: "Search Places",
 
@@ -121,10 +135,10 @@ class ListingScreen extends StatelessWidget {
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16),
 
-              itemCount: places.length,
+              itemCount: widget.places.length,
 
               itemBuilder: (context, index) {
-                final place = places[index];
+                final place = widget.places[index];
 
                 if (!place['name'].toLowerCase().contains(
                   search.toLowerCase(),
@@ -146,8 +160,10 @@ class ListingScreen extends StatelessWidget {
                     children: [
                       Container(
                         height: 200,
+
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
+
                           image: DecorationImage(
                             image: NetworkImage(place['image']),
                             fit: BoxFit.cover,
@@ -155,7 +171,6 @@ class ListingScreen extends StatelessWidget {
                         ),
                       ),
 
-                      // DETAILS
                       Padding(
                         padding: const EdgeInsets.all(12),
 
@@ -194,20 +209,22 @@ class ListingScreen extends StatelessWidget {
                                       ),
                                     );
                                   },
+
                                   child: const Text(
                                     "Discover",
+
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),
 
-                                Spacer(),
+                                const Spacer(),
 
                                 IconButton(
                                   onPressed: () {
-                                    // delete code here
-                                    deletePlace(index);
+                                    widget.deletePlace(index);
+
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                         content: Text("Place Deleted"),
