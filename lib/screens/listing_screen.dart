@@ -186,18 +186,25 @@ class ListingScreen extends StatelessWidget {
                                       ),
                                     );
                                   },
-                                  child: const Text("Discover", style: TextStyle(fontWeight: FontWeight.w600)),
+                                  child: const Text(
+                                    "Discover",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                 ),
 
                                 Spacer(),
-                                
+
                                 IconButton(
                                   onPressed: () {
                                     // delete code here
                                     deletePlace(index);
-                                    ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(const SnackBar(content: Text("Place Deleted")));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Place Deleted"),
+                                      ),
+                                    );
                                   },
 
                                   icon: const Icon(
