@@ -230,16 +230,13 @@ class _ListingScreenState extends State<ListingScreen> {
                                       context,
 
                                       MaterialPageRoute(
-                                        builder: (_) =>
-                                            UpdateDetailScreen(
-                                              place: place,
-                                              index: index,
-                                              updatePlace: widget.updatePlace,
-                                            ),
+                                        builder: (_) => UpdateDetailScreen(
+                                          place: place,
+                                          index: index,
+                                          updatePlace: widget.updatePlace,
+                                        ),
                                       ),
                                     );
-
-                                   
                                   },
 
                                   icon: const Icon(
@@ -248,14 +245,73 @@ class _ListingScreenState extends State<ListingScreen> {
                                   ),
                                 ),
 
+                                // IconButton(
+                                //   onPressed: () {
+                                //     widget.deletePlace(index);
+
+                                //     ScaffoldMessenger.of(context).showSnackBar(
+                                //       const SnackBar(
+                                //         content: Text("Place Deleted"),
+                                //       ),
+                                //     );
+                                //   },
+
+                                //   icon: const Icon(
+                                //     Icons.delete,
+                                //     color: Color.fromARGB(255, 205, 117, 237),
+                                //   ),
+                                // ),
                                 IconButton(
                                   onPressed: () {
-                                    widget.deletePlace(index);
+                                    showDialog(
+                                      context: context,
 
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text("Place Deleted"),
-                                      ),
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: const Text("Delete Place"),
+
+                                          content: const Text(
+                                            "Are you sure you want to delete this place?",
+                                          ),
+
+                                          actions: [
+                                            // Cancel Button
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+
+                                              child: const Text("Cancel"),
+                                            ),
+
+                                            // Delete Button
+                                            TextButton(
+                                              onPressed: () {
+                                                widget.deletePlace(index);
+
+                                                Navigator.pop(context);
+
+                                                ScaffoldMessenger.of(
+                                                  this.context,
+                                                ).showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                      "Place Deleted",
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+
+                                              child: const Text(
+                                                "Delete",
+                                                style: TextStyle(
+                                                  color: Colors.red,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     );
                                   },
 

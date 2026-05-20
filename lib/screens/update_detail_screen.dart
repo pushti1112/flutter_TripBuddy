@@ -101,7 +101,7 @@ class _UpdateDetailScreenState extends State<UpdateDetailScreen> {
                   widget.updatePlace(widget.index, updatedPlace);
 
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Updated Place")),
+                    const SnackBar(content: Text(" Place Updated")),
                   );
                   Navigator.pop(context);
                 },
