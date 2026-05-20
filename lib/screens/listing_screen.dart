@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/add_place_screen.dart';
 import 'package:flutter_application_1/screens/detail_screen.dart';
+import 'package:flutter_application_1/screens/update_detail_screen.dart';
 
 class ListingScreen extends StatefulWidget {
   final List<Map<String, dynamic>> places;
   final Function(Map<String, dynamic>) addPlace;
   final Function(int) deletePlace;
+  final Function(int, Map<String, dynamic>) updatePlace;
 
   const ListingScreen({
     super.key,
     required this.places,
     required this.addPlace,
     required this.deletePlace,
+    required this.updatePlace,
   });
 
   @override
@@ -223,11 +226,20 @@ class _ListingScreenState extends State<ListingScreen> {
 
                                 IconButton(
                                   onPressed: () {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text("Updated Place"),
+                                    Navigator.push(
+                                      context,
+
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            UpdateDetailScreen(
+                                              place: place,
+                                              index: index,
+                                              updatePlace: widget.updatePlace,
+                                            ),
                                       ),
                                     );
+
+                                   
                                   },
 
                                   icon: const Icon(
