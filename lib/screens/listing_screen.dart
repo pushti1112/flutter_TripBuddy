@@ -223,6 +223,21 @@ class _ListingScreenState extends State<ListingScreen> {
 
                                 IconButton(
                                   onPressed: () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Updated Place"),
+                                      ),
+                                    );
+                                  },
+
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    color: Color.fromARGB(255, 205, 117, 237),
+                                  ),
+                                ),
+
+                                IconButton(
+                                  onPressed: () {
                                     widget.deletePlace(index);
 
                                     ScaffoldMessenger.of(context).showSnackBar(
