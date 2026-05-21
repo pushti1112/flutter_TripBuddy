@@ -80,16 +80,15 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
 
             ElevatedButton(
               onPressed: () {
-                // Handle save action
                 final newPlace = {
                   "name": nameController.text,
                   "city": cityController.text,
                   "image": imageController.text,
                   "description": descriptionController.text,
                 };
-                
+
                 widget.addPlace(newPlace);
-                
+
                 ScaffoldMessenger.of(
                   context,
                 ).showSnackBar(const SnackBar(content: Text("Place Added")));

@@ -42,6 +42,18 @@ class _PlaceHolderState extends State<PlaceHolder> {
           "Millions of tourists visit this wonderful place every year to enjoy its beauty "
           "and learn about its rich history.",
     },
+
+    {
+      "name": "India Gate",
+      "city": "New Delhi",
+      "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5",
+      "description":
+          "India Gate is one of the most famous monuments in India and a symbol of bravery. "
+          "It is located in New Delhi and was built in memory of Indian soldiers who died in World War I. "
+          "Designed by Sir Edwin Lutyens, the monument is known for its beautiful architecture and historical importance. "
+          "The Amar Jawan Jyoti beneath the arch honors the unknown soldiers of India. "
+          "Thousands of tourists visit this wonderful place every year to enjoy its beauty and peaceful surroundings.",
+    },
   ];
 
   void addPlace(Map<String, dynamic> newPlace) {
@@ -90,14 +102,11 @@ class _PlaceHolderState extends State<PlaceHolder> {
 
   void loadList() async {
     try {
-      // initialize shared preferences
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      // get string
       String? jsonString = prefs.getString("places_key");
 
       if (jsonString != null) {
-        // convert string to list
         List<dynamic> jsonList = jsonDecode(jsonString);
 
         setState(() {
@@ -134,7 +143,6 @@ class _PlaceHolderState extends State<PlaceHolder> {
 
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          // LISTING SCREEN
           case "/":
             return MaterialPageRoute(
               builder: (_) => ListingScreen(
@@ -145,7 +153,6 @@ class _PlaceHolderState extends State<PlaceHolder> {
               ),
             );
 
-          // ADD PLACE SCREEN
           case "/addPlace":
             return MaterialPageRoute(
               builder: (_) =>
