@@ -67,10 +67,8 @@ class _PlaceHolderState extends State<PlaceHolder> {
 
   Future<void> saveList() async {
     try {
-      // initialize shared preferences
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      // convert whole list into json string
       String jsonString = jsonEncode(
         places.map((item) {
           return {
@@ -82,7 +80,6 @@ class _PlaceHolderState extends State<PlaceHolder> {
         }).toList(),
       );
 
-      // save string
       await prefs.setString("places_key", jsonString);
 
       print("List Successfully Saved");
@@ -91,7 +88,43 @@ class _PlaceHolderState extends State<PlaceHolder> {
     }
   }
 
-  
+  void loadList() async {
+    try {
+      // initialize shared preferences
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      // get string
+      String? jsonString = prefs.getString("places_key");
+
+      if (jsonString != null) {
+        // convert string to list
+        List<dynamic> jsonList = jsonDecode(jsonString);
+
+        setState(() {
+          places = jsonList.map((item) {
+            return {
+              "name": item["name"],
+              "city": item["city"],
+              "image": item["image"],
+              "description": item["description"],
+            };
+          }).toList();
+        });
+
+        print("List Successfully Loaded");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    loadList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -119,7 +152,6 @@ class _PlaceHolderState extends State<PlaceHolder> {
                   AddPlaceScreen(places: places, addPlace: addPlace),
             );
 
-          // DETAIL SCREEN
           case "/detail":
             final place = settings.arguments as Map<String, dynamic>;
 
@@ -127,7 +159,6 @@ class _PlaceHolderState extends State<PlaceHolder> {
               builder: (_) => DetailScreen(place: place),
             );
 
-          // UPDATE SCREEN
           case "/update":
             final data = settings.arguments as Map<String, dynamic>;
 
