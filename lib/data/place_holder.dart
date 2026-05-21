@@ -3,6 +3,8 @@ import 'package:flutter_application_1/screens/listing_screen.dart';
 import 'package:flutter_application_1/screens/add_place_screen.dart';
 import 'package:flutter_application_1/screens/detail_screen.dart';
 import 'package:flutter_application_1/screens/update_detail_screen.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PlaceHolder extends StatefulWidget {
   const PlaceHolder({super.key});
@@ -46,20 +48,50 @@ class _PlaceHolderState extends State<PlaceHolder> {
     setState(() {
       places.add(newPlace);
     });
+    saveList();
   }
 
   void deletePlace(int index) {
     setState(() {
       places.removeAt(index);
     });
+    saveList();
   }
 
   void updatePlace(int index, Map<String, dynamic> updatedPlace) {
     setState(() {
       places[index] = updatedPlace;
     });
+    saveList();
   }
 
+  Future<void> saveList() async {
+    try {
+      // initialize shared preferences
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      // convert whole list into json string
+      String jsonString = jsonEncode(
+        places.map((item) {
+          return {
+            "name": item["name"],
+            "city": item["city"],
+            "image": item["image"],
+            "description": item["description"],
+          };
+        }).toList(),
+      );
+
+      // save string
+      await prefs.setString("places_key", jsonString);
+
+      print("List Successfully Saved");
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
