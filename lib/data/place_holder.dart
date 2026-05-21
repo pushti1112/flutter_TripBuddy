@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/listing_screen.dart';
+import 'package:flutter_application_1/screens/add_place_screen.dart';
+import 'package:flutter_application_1/screens/detail_screen.dart';
+import 'package:flutter_application_1/screens/update_detail_screen.dart';
 
 class PlaceHolder extends StatefulWidget {
   const PlaceHolder({super.key});
@@ -59,11 +62,58 @@ class _PlaceHolderState extends State<PlaceHolder> {
 
   @override
   Widget build(BuildContext context) {
-    return ListingScreen(
-      places: places,
-      addPlace: addPlace,
-      deletePlace: deletePlace,
-      updatePlace: updatePlace,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+
+      initialRoute: "/",
+
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          // LISTING SCREEN
+          case "/":
+            return MaterialPageRoute(
+              builder: (_) => ListingScreen(
+                places: places,
+                addPlace: addPlace,
+                deletePlace: deletePlace,
+                updatePlace: updatePlace,
+              ),
+            );
+
+          // ADD PLACE SCREEN
+          case "/addPlace":
+            return MaterialPageRoute(
+              builder: (_) =>
+                  AddPlaceScreen(places: places, addPlace: addPlace),
+            );
+
+          // DETAIL SCREEN
+          case "/detail":
+            final place = settings.arguments as Map<String, dynamic>;
+
+            return MaterialPageRoute(
+              builder: (_) => DetailScreen(place: place),
+            );
+
+          // UPDATE SCREEN
+          case "/update":
+            final data = settings.arguments as Map<String, dynamic>;
+
+            return MaterialPageRoute(
+              builder: (_) => UpdateDetailScreen(
+                place: data['place'],
+                index: data['index'],
+                updatePlace: updatePlace,
+              ),
+            );
+
+          default:
+            return MaterialPageRoute(
+              builder: (_) =>
+                  const Scaffold(body: Center(child: Text("Route Not Found"))),
+            );
+        }
+      },
     );
   }
 }

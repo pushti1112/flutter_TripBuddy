@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/add_place_screen.dart';
-import 'package:flutter_application_1/screens/detail_screen.dart';
-import 'package:flutter_application_1/screens/update_detail_screen.dart';
+// import 'package:flutter_application_1/screens/add_place_screen.dart';
+// import 'package:flutter_application_1/screens/detail_screen.dart';
+// import 'package:flutter_application_1/screens/update_detail_screen.dart';
 
 class ListingScreen extends StatefulWidget {
   final List<Map<String, dynamic>> places;
@@ -33,15 +33,22 @@ class _ListingScreenState extends State<ListingScreen> {
         backgroundColor: Colors.blue,
 
         onPressed: () {
-          Navigator.push(
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (_) => AddPlaceScreen(
+          //       places: widget.places,
+          //       addPlace: widget.addPlace,
+          //     ),
+          //   ),
+          // );
+
+          Navigator.pushNamed(
             context,
-            MaterialPageRoute(
-              builder: (_) => AddPlaceScreen(
-                places: widget.places,
-                addPlace: widget.addPlace,
-              ),
-            ),
+            "/addPlace",
+            arguments: {"places": widget.places, "addPlace": widget.addPlace},
           );
+
         },
 
         child: const Icon(Icons.add, color: Colors.white),
@@ -204,12 +211,19 @@ class _ListingScreenState extends State<ListingScreen> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    Navigator.push(
+
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (_) =>
+                                    //         DetailScreen(place: place),
+                                    //   ),
+                                    // );
+
+                                    Navigator.pushNamed(
                                       context,
-                                      MaterialPageRoute(
-                                        builder: (_) =>
-                                            DetailScreen(place: place),
-                                      ),
+                                      "/detail",
+                                      arguments: place,
                                     );
                                   },
 
@@ -226,16 +240,27 @@ class _ListingScreenState extends State<ListingScreen> {
 
                                 IconButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
 
-                                      MaterialPageRoute(
-                                        builder: (_) => UpdateDetailScreen(
-                                          place: place,
-                                          index: index,
-                                          updatePlace: widget.updatePlace,
-                                        ),
-                                      ),
+                                    // Navigator.push(
+                                    //   context,
+
+                                    //   MaterialPageRoute(
+                                    //     builder: (_) => UpdateDetailScreen(
+                                    //       place: place,
+                                    //       index: index,
+                                    //       updatePlace: widget.updatePlace,
+                                    //     ),
+                                    //   ),
+                                    // );
+
+                                    Navigator.pushNamed(
+                                      context,
+                                      "/update",
+
+                                      arguments: {
+                                        "place": place,
+                                        "index": index,
+                                      },
                                     );
                                   },
 
@@ -261,6 +286,7 @@ class _ListingScreenState extends State<ListingScreen> {
                                 //     color: Color.fromARGB(255, 205, 117, 237),
                                 //   ),
                                 // ),
+
                                 IconButton(
                                   onPressed: () {
                                     showDialog(
@@ -279,6 +305,7 @@ class _ListingScreenState extends State<ListingScreen> {
                                             TextButton(
                                               onPressed: () {
                                                 Navigator.pop(context);
+                                                
                                               },
 
                                               child: const Text("Cancel"),
