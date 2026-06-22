@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   final List<Map<String, dynamic>> places;
@@ -15,10 +18,22 @@ class AddPlaceScreen extends StatefulWidget {
 }
 
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
-  final TextEditingController imageController = TextEditingController();
+  // File? selectedImage;
+  XFile? selectedImage;
+  final picker = ImagePicker();
+  // final TextEditingController imageController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+
+  Future<void> pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        selectedImage = pickedFile;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +44,40 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            TextField(
-              controller: imageController,
-              decoration: InputDecoration(
-                labelText: 'Image URL',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
+            // TextField(
+            //   controller: imageController,
+            //   decoration: InputDecoration(
+            //     labelText: 'Image URL',
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(12),
+            //     ),
+            //   ),
+            // ),
+            Column(
+              children: [
+                selectedImage != null
+                    ? kIsWeb
+                          ? Image.network(
+                              selectedImage!.path,
+                              height: 200,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.file(
+                              File(selectedImage!.path),
+                              height: 200,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            )
+                    : Container(
+                        height: 200,
+                        width: double.infinity,
+                        color: Colors.grey[300],
+                        child: Icon(Icons.image, size: 100),
+                      ),
+                SizedBox(height: 10),
+                ElevatedButton(onPressed: pickImage, child: Text('Pick Image')),
+              ],
             ),
 
             SizedBox(height: 10),
@@ -80,10 +121,17 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
 
             ElevatedButton(
               onPressed: () {
+                if (selectedImage == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please select an image')),
+                  );
+                  return;
+                }
+
                 final newPlace = {
                   "name": nameController.text,
                   "city": cityController.text,
-                  "image": imageController.text,
+                  "image": selectedImage?.path,
                   "description": descriptionController.text,
                 };
 

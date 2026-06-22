@@ -91,7 +91,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 20),
 
                 child: Text(
-                  'Your Guide To Endless Journey...',
+                  'Your Personal Travel Journal...',
 
                   textAlign: TextAlign.center,
 

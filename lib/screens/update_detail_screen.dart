@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter/foundation.dart';
 
 class UpdateDetailScreen extends StatefulWidget {
   final Map<String, dynamic> place;
@@ -17,16 +20,52 @@ class UpdateDetailScreen extends StatefulWidget {
 }
 
 class _UpdateDetailScreenState extends State<UpdateDetailScreen> {
-  final TextEditingController imageController = TextEditingController();
+  XFile? selectedImage;
+
+  final picker = ImagePicker();
+  // final TextEditingController imageController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  Future<void> pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
+    if (pickedFile != null) {
+      setState(() {
+        selectedImage = pickedFile;
+      });
+    }
+  }
+
+  buildPlaceImage(String imagePath) {
+    if (imagePath.toString().startsWith('lib/assets/')) {
+      return Image.asset(
+        imagePath,
+        height: 200,
+        width: double.infinity,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return kIsWeb
+          ? Image.network(
+              imagePath,
+              height: 200,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            )
+          : Image.file(
+              File(imagePath),
+              height: 200,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            );
+    }
+  }
   @override
   void initState() {
     super.initState();
 
-    imageController.text = widget.place['image'];
+    // imageController.text = widget.place['image'];
     nameController.text = widget.place['name'];
     cityController.text = widget.place['city'];
     descriptionController.text = widget.place['description'];
@@ -41,14 +80,29 @@ class _UpdateDetailScreenState extends State<UpdateDetailScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              TextField(
-                controller: imageController,
-                decoration: InputDecoration(
-                  labelText: 'Image URL',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+              // TextField(
+              //   controller: imageController,
+              //   decoration: InputDecoration(
+              //     labelText: 'Image URL',
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(12),
+              //     ),
+              //   ),
+              // ),
+              Column(
+                children: [
+
+                  selectedImage != null
+    ? buildPlaceImage(selectedImage!.path)
+    : buildPlaceImage(widget.place['image']),
+
+                  const SizedBox(height: 10),
+
+                  ElevatedButton(
+                    onPressed: pickImage,
+                    child: const Text("Change Image"),
                   ),
-                ),
+                ],
               ),
 
               SizedBox(height: 30),
@@ -92,7 +146,7 @@ class _UpdateDetailScreenState extends State<UpdateDetailScreen> {
               ElevatedButton(
                 onPressed: () {
                   final updatedPlace = {
-                    'image': imageController.text,
+                    'image': selectedImage?.path ?? widget.place['image'],
                     'name': nameController.text,
                     'city': cityController.text,
                     'description': descriptionController.text,
