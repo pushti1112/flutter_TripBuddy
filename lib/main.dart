@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_application_1/screens/add_place_screen.dart';
 import 'package:flutter_application_1/screens/splash_screen.dart';
-// import 'package:flutter_application_1/screens/listing_screen.dart';
+
 
 void main() {
   runApp(const MainApp());

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 // import 'package:flutter_application_1/screens/add_place_screen.dart';
 // import 'package:flutter_application_1/screens/detail_screen.dart';
 // import 'package:flutter_application_1/screens/update_detail_screen.dart';
@@ -48,7 +50,6 @@ class _ListingScreenState extends State<ListingScreen> {
             "/addPlace",
             arguments: {"places": widget.places, "addPlace": widget.addPlace},
           );
-
         },
 
         child: const Icon(Icons.add, color: Colors.white),
@@ -95,7 +96,7 @@ class _ListingScreenState extends State<ListingScreen> {
                     SizedBox(height: 5),
 
                     Text(
-                      "Make your trip easier with trip buddy!",
+                      "Capture Every moment of your Journey",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ],
@@ -107,7 +108,9 @@ class _ListingScreenState extends State<ListingScreen> {
                 right: 10,
 
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/profile");
+                  },
 
                   icon: const Icon(Icons.person, color: Colors.white, size: 30),
                 ),
@@ -175,7 +178,17 @@ class _ListingScreenState extends State<ListingScreen> {
                           borderRadius: BorderRadius.circular(15),
 
                           image: DecorationImage(
-                            image: NetworkImage(place['image']),
+                            image:
+                                place['image'].toString().startsWith(
+                                  'lib/assets/',
+                                )
+                                ? AssetImage(place['image'])
+                                // : FileImage(File(place['image']))
+                                //       as ImageProvider,
+                                : kIsWeb
+                                ? NetworkImage(place['image']) 
+                                : FileImage(File(place['image']))
+                                      as ImageProvider,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -211,7 +224,6 @@ class _ListingScreenState extends State<ListingScreen> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-
                                     // Navigator.push(
                                     //   context,
                                     //   MaterialPageRoute(
@@ -240,7 +252,6 @@ class _ListingScreenState extends State<ListingScreen> {
 
                                 IconButton(
                                   onPressed: () {
-
                                     // Navigator.push(
                                     //   context,
 
@@ -286,7 +297,6 @@ class _ListingScreenState extends State<ListingScreen> {
                                 //     color: Color.fromARGB(255, 205, 117, 237),
                                 //   ),
                                 // ),
-
                                 IconButton(
                                   onPressed: () {
                                     showDialog(
@@ -305,7 +315,6 @@ class _ListingScreenState extends State<ListingScreen> {
                                             TextButton(
                                               onPressed: () {
                                                 Navigator.pop(context);
-                                                
                                               },
 
                                               child: const Text("Cancel"),

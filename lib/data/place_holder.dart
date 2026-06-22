@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:flutter_application_1/screens/listing_screen.dart';
 import 'package:flutter_application_1/screens/add_place_screen.dart';
 import 'package:flutter_application_1/screens/detail_screen.dart';
 import 'package:flutter_application_1/screens/update_detail_screen.dart';
-import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_application_1/screens/profile_screen.dart';
 
 class PlaceHolder extends StatefulWidget {
   const PlaceHolder({super.key});
@@ -18,7 +19,7 @@ class _PlaceHolderState extends State<PlaceHolder> {
     {
       "name": "Eiffel Tower",
       "city": "Paris",
-      "image": "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f",
+      "image": "lib/assets/Eiffel_Tower.jpeg",
       "description":
           "The Eiffel Tower is one of the most famous landmarks in the world. "
           "It is located in Paris, France, and was built in 1889. "
@@ -32,7 +33,7 @@ class _PlaceHolderState extends State<PlaceHolder> {
     {
       "name": "Taj Mahal",
       "city": "Agra",
-      "image": "https://images.unsplash.com/photo-1564507592333-c60657eea523",
+      "image": "lib/assets/Taj_Mahal.jpeg",
       "description":
           "The Taj Mahal is one of the most famous monuments in the world and a symbol of love. "
           "It is located in Agra, India, and was built by the Mughal emperor Shah Jahan "
@@ -46,7 +47,7 @@ class _PlaceHolderState extends State<PlaceHolder> {
     {
       "name": "India Gate",
       "city": "New Delhi",
-      "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5",
+      "image": "lib/assets/India_Gate.jpeg",
       "description":
           "India Gate is one of the most famous monuments in India and a symbol of bravery. "
           "It is located in New Delhi and was built in memory of Indian soldiers who died in World War I. "
@@ -175,6 +176,11 @@ class _PlaceHolderState extends State<PlaceHolder> {
                 index: data['index'],
                 updatePlace: updatePlace,
               ),
+            );
+
+          case "/profile":
+            return MaterialPageRoute(
+              builder: (_) => ProfileScreen(totalPlaces: places.length),
             );
 
           default:
